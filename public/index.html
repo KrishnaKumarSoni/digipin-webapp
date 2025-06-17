@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>DIGIPIN - Geo-coded Addressing System</title>
+    
+    <!-- Leaflet CSS -->
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
+    
+    <!-- Custom CSS -->
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <div id="map"></div>
+    
+    <!-- Control Panel Widget -->
+    <div class="control-panel">
+        <div class="panel-header">
+            <h2>🇮🇳 DIGIPIN</h2>
+            <p>Geo-coded Addressing System</p>
+        </div>
+        
+        <div class="input-section">
+            <div class="input-group">
+                <label for="latitude">Latitude:</label>
+                <input type="number" id="latitude" step="any" placeholder="e.g., 12.9716">
+            </div>
+            
+            <div class="input-group">
+                <label for="longitude">Longitude:</label>
+                <input type="number" id="longitude" step="any" placeholder="e.g., 77.5946">
+            </div>
+            
+            <div class="button-group">
+                <button id="getCurrentLocation" class="location-btn">
+                    📍 Use Current Location
+                </button>
+                <button id="generateDigipin" class="generate-btn">
+                    🔢 Generate DIGIPIN
+                </button>
+            </div>
+        </div>
+        
+        <div class="result-section" id="resultSection" style="display: none;">
+            <div class="digipin-display">
+                <label>DIGIPIN Code:</label>
+                <div id="digipinResult" class="digipin-code"></div>
+                <button id="copyDigipin" class="copy-btn">📋 Copy</button>
+            </div>
+        </div>
+        
+        <div class="decode-section">
+            <div class="input-group">
+                <label for="digipinInput">Decode DIGIPIN:</label>
+                <input type="text" id="digipinInput" placeholder="e.g., 4P3-JK8-52C9">
+            </div>
+            <button id="decodeDigipin" class="decode-btn">🔍 Decode & Show</button>
+        </div>
+        
+        <div class="info-section">
+            <div class="status" id="status"></div>
+        </div>
+    </div>
+    
+    <!-- Loading overlay -->
+    <div id="loadingOverlay" class="loading-overlay" style="display: none;">
+        <div class="loading-spinner"></div>
+        <p>Processing...</p>
+    </div>
+    
+    <!-- Leaflet JS -->
+    <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+    
+    <!-- Custom JS -->
+    <script src="script.js"></script>
+</body>
+</html> 

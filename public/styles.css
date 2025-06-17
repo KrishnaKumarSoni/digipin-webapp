@@ -1,0 +1,320 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body, html {
+    height: 100%;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    background: #f0f2f5;
+}
+
+/* Full-page map */
+#map {
+    height: 100vh;
+    width: 100vw;
+    z-index: 1;
+}
+
+/* Control panel widget overlay */
+.control-panel {
+    position: absolute;
+    top: 20px;
+    left: 20px;
+    width: 320px;
+    background: rgba(255, 255, 255, 0.95);
+    backdrop-filter: blur(10px);
+    border-radius: 12px;
+    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    z-index: 1000;
+    padding: 20px;
+    max-height: calc(100vh - 40px);
+    overflow-y: auto;
+}
+
+.panel-header {
+    text-align: center;
+    margin-bottom: 20px;
+    border-bottom: 2px solid #e3f2fd;
+    padding-bottom: 15px;
+}
+
+.panel-header h2 {
+    color: #1976d2;
+    font-size: 24px;
+    font-weight: 700;
+    margin-bottom: 5px;
+}
+
+.panel-header p {
+    color: #666;
+    font-size: 14px;
+}
+
+/* Input sections */
+.input-section, .decode-section {
+    margin-bottom: 20px;
+}
+
+.input-group {
+    margin-bottom: 15px;
+}
+
+.input-group label {
+    display: block;
+    margin-bottom: 5px;
+    font-weight: 600;
+    color: #333;
+    font-size: 14px;
+}
+
+.input-group input {
+    width: 100%;
+    padding: 12px 15px;
+    border: 2px solid #e0e0e0;
+    border-radius: 8px;
+    font-size: 14px;
+    transition: all 0.3s ease;
+    background: rgba(255, 255, 255, 0.9);
+}
+
+.input-group input:focus {
+    outline: none;
+    border-color: #1976d2;
+    box-shadow: 0 0 0 3px rgba(25, 118, 210, 0.1);
+}
+
+/* Button styles */
+.button-group {
+    display: flex;
+    gap: 10px;
+    margin-top: 15px;
+}
+
+button {
+    padding: 12px 16px;
+    border: none;
+    border-radius: 8px;
+    font-size: 14px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+}
+
+.location-btn {
+    background: linear-gradient(135deg, #4caf50, #45a049);
+    color: white;
+    flex: 1;
+}
+
+.location-btn:hover {
+    background: linear-gradient(135deg, #45a049, #3d8b40);
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(76, 175, 80, 0.3);
+}
+
+.generate-btn {
+    background: linear-gradient(135deg, #2196f3, #1976d2);
+    color: white;
+    flex: 1;
+}
+
+.generate-btn:hover {
+    background: linear-gradient(135deg, #1976d2, #1565c0);
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(33, 150, 243, 0.3);
+}
+
+.decode-btn {
+    background: linear-gradient(135deg, #ff9800, #f57c00);
+    color: white;
+    width: 100%;
+}
+
+.decode-btn:hover {
+    background: linear-gradient(135deg, #f57c00, #ef6c00);
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(255, 152, 0, 0.3);
+}
+
+.copy-btn {
+    background: linear-gradient(135deg, #9c27b0, #7b1fa2);
+    color: white;
+    padding: 8px 12px;
+    font-size: 12px;
+    margin-top: 8px;
+}
+
+.copy-btn:hover {
+    background: linear-gradient(135deg, #7b1fa2, #6a1b9a);
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(156, 39, 176, 0.3);
+}
+
+/* Result section */
+.result-section {
+    background: linear-gradient(135deg, #e8f5e8, #f1f8e9);
+    border: 2px solid #4caf50;
+    border-radius: 10px;
+    padding: 15px;
+    margin-bottom: 20px;
+}
+
+.digipin-display label {
+    color: #2e7d32;
+    font-weight: 700;
+    margin-bottom: 8px;
+    display: block;
+}
+
+.digipin-code {
+    background: #fff;
+    border: 2px solid #4caf50;
+    border-radius: 8px;
+    padding: 15px;
+    font-family: 'Courier New', monospace;
+    font-size: 18px;
+    font-weight: bold;
+    text-align: center;
+    color: #1b5e20;
+    letter-spacing: 2px;
+    word-break: break-all;
+}
+
+/* Status messages */
+.status {
+    padding: 10px;
+    border-radius: 6px;
+    margin-top: 10px;
+    font-size: 14px;
+    text-align: center;
+}
+
+.status.success {
+    background: #d4edda;
+    color: #155724;
+    border: 1px solid #c3e6cb;
+}
+
+.status.error {
+    background: #f8d7da;
+    color: #721c24;
+    border: 1px solid #f5c6cb;
+}
+
+.status.info {
+    background: #d1ecf1;
+    color: #0c5460;
+    border: 1px solid #bee5eb;
+}
+
+/* Loading overlay */
+.loading-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.7);
+    z-index: 2000;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    color: white;
+}
+
+.loading-spinner {
+    width: 50px;
+    height: 50px;
+    border: 4px solid rgba(255, 255, 255, 0.3);
+    border-radius: 50%;
+    border-top-color: #fff;
+    animation: spin 1s ease-in-out infinite;
+    margin-bottom: 20px;
+}
+
+@keyframes spin {
+    to { transform: rotate(360deg); }
+}
+
+/* Custom map marker styles */
+.custom-div-icon {
+    background: none;
+    border: none;
+}
+
+.marker-pin {
+    width: 30px;
+    height: 30px;
+    border-radius: 50% 50% 50% 0;
+    background: #ff4444;
+    position: absolute;
+    transform: rotate(-45deg);
+    left: 50%;
+    top: 50%;
+    margin: -15px 0 0 -15px;
+}
+
+.marker-pin::after {
+    content: '';
+    width: 14px;
+    height: 14px;
+    margin: 8px 0 0 8px;
+    background: #fff;
+    position: absolute;
+    border-radius: 50%;
+}
+
+/* Responsive design */
+@media (max-width: 768px) {
+    .control-panel {
+        width: calc(100vw - 40px);
+        max-width: 350px;
+    }
+    
+    .button-group {
+        flex-direction: column;
+    }
+    
+    button {
+        width: 100%;
+    }
+}
+
+/* Map popup customization */
+.leaflet-popup-content-wrapper {
+    border-radius: 8px;
+}
+
+.leaflet-popup-content {
+    margin: 15px;
+    line-height: 1.6;
+}
+
+.popup-title {
+    font-weight: bold;
+    color: #1976d2;
+    margin-bottom: 8px;
+    font-size: 16px;
+}
+
+.popup-content {
+    color: #333;
+}
+
+.popup-digipin {
+    background: #e3f2fd;
+    padding: 8px 12px;
+    border-radius: 6px;
+    font-family: 'Courier New', monospace;
+    font-weight: bold;
+    color: #1565c0;
+    margin-top: 8px;
+} 
