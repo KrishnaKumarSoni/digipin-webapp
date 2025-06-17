@@ -34,6 +34,7 @@ function bindEventListeners() {
     document.getElementById('generateDigipin').addEventListener('click', generateDigipin);
     document.getElementById('decodeDigipin').addEventListener('click', decodeDigipin);
     document.getElementById('copyDigipin').addEventListener('click', copyDigipinToClipboard);
+    document.getElementById('closeOutput').addEventListener('click', hideOutputPanel);
     
     // Enter key handlers
     document.getElementById('latitude').addEventListener('keypress', handleEnterKey);
@@ -167,9 +168,8 @@ async function generateDigipin() {
         const data = await response.json();
         
         if (response.ok && data.digipin) {
-            // Show result
-            document.getElementById('digipinResult').textContent = data.digipin;
-            document.getElementById('resultSection').style.display = 'block';
+            // Show result in output panel
+            showOutputPanel(data.digipin, lat, lng, 'encode');
             
             // Add marker with DIGIPIN
             addMarkerToMap(lat, lng, 'Generated DIGIPIN Location', data.digipin);
@@ -216,6 +216,9 @@ async function decodeDigipin() {
             // Update coordinate fields
             updateCoordinates(lat, lng);
             
+            // Show result in output panel
+            showOutputPanel(digipin, lat, lng, 'decode');
+            
             // Add marker and zoom to location
             addMarkerToMap(lat, lng, 'Decoded DIGIPIN Location', digipin);
             map.setView([lat, lng], 16);
@@ -248,7 +251,7 @@ async function copyDigipinToClipboard() {
         // Visual feedback
         const copyBtn = document.getElementById('copyDigipin');
         const originalText = copyBtn.innerHTML;
-        copyBtn.innerHTML = '✅ Copied!';
+        copyBtn.innerHTML = '<i class="fas fa-check"></i> Copied!';
         
         setTimeout(() => {
             copyBtn.innerHTML = originalText;
@@ -298,6 +301,35 @@ function isValidCoordinate(lat, lng) {
     return !isNaN(lat) && !isNaN(lng) && 
            lat >= -90 && lat <= 90 && 
            lng >= -180 && lng <= 180;
+}
+
+// Show output panel with results
+function showOutputPanel(digipin, lat, lng, type) {
+    const outputPanel = document.getElementById('outputPanel');
+    const digipinResult = document.getElementById('digipinResult');
+    const resultLat = document.getElementById('resultLat');
+    const resultLng = document.getElementById('resultLng');
+    
+    // Set the DIGIPIN code
+    digipinResult.textContent = digipin;
+    
+    // Set the coordinates
+    resultLat.textContent = lat.toFixed(6);
+    resultLng.textContent = lng.toFixed(6);
+    
+    // Show the output panel
+    outputPanel.style.display = 'block';
+    
+    // Scroll to top of output panel on mobile
+    if (window.innerWidth <= 768) {
+        outputPanel.scrollTop = 0;
+    }
+}
+
+// Hide output panel
+function hideOutputPanel() {
+    const outputPanel = document.getElementById('outputPanel');
+    outputPanel.style.display = 'none';
 }
 
 // Handle API errors gracefully

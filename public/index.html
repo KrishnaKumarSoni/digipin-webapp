@@ -8,58 +8,123 @@
     <!-- Leaflet CSS -->
     <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
     
+    <!-- Font Awesome Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" />
+    
     <!-- Custom CSS -->
     <link rel="stylesheet" href="styles.css">
 </head>
 <body>
     <div id="map"></div>
     
-    <!-- Control Panel Widget -->
-    <div class="control-panel">
+    <!-- Input Control Panel -->
+    <div class="input-panel panel">
         <div class="panel-header">
-            <h2>🇮🇳 DIGIPIN</h2>
-            <p>Geo-coded Addressing System</p>
+            <h2><i class="fas fa-map-marker-alt"></i> DIGIPIN Input</h2>
+            <p>Enter coordinates or get current location</p>
         </div>
         
         <div class="input-section">
             <div class="input-group">
-                <label for="latitude">Latitude:</label>
+                <label for="latitude"><i class="fas fa-arrows-alt-v"></i> Latitude:</label>
                 <input type="number" id="latitude" step="any" placeholder="e.g., 12.9716">
             </div>
             
             <div class="input-group">
-                <label for="longitude">Longitude:</label>
+                <label for="longitude"><i class="fas fa-arrows-alt-h"></i> Longitude:</label>
                 <input type="number" id="longitude" step="any" placeholder="e.g., 77.5946">
             </div>
             
             <div class="button-group">
                 <button id="getCurrentLocation" class="location-btn">
-                    📍 Use Current Location
+                    <i class="fas fa-crosshairs"></i> Current Location
                 </button>
                 <button id="generateDigipin" class="generate-btn">
-                    🔢 Generate DIGIPIN
+                    <i class="fas fa-code"></i> Generate
                 </button>
-            </div>
-        </div>
-        
-        <div class="result-section" id="resultSection" style="display: none;">
-            <div class="digipin-display">
-                <label>DIGIPIN Code:</label>
-                <div id="digipinResult" class="digipin-code"></div>
-                <button id="copyDigipin" class="copy-btn">📋 Copy</button>
             </div>
         </div>
         
         <div class="decode-section">
+            <div class="section-divider">
+                <span>OR</span>
+            </div>
             <div class="input-group">
-                <label for="digipinInput">Decode DIGIPIN:</label>
+                <label for="digipinInput"><i class="fas fa-search"></i> Decode DIGIPIN:</label>
                 <input type="text" id="digipinInput" placeholder="e.g., 4P3-JK8-52C9">
             </div>
-            <button id="decodeDigipin" class="decode-btn">🔍 Decode & Show</button>
+            <button id="decodeDigipin" class="decode-btn">
+                <i class="fas fa-search"></i> Decode & Show
+            </button>
         </div>
         
         <div class="info-section">
             <div class="status" id="status"></div>
+        </div>
+    </div>
+
+    <!-- Output Panel -->
+    <div class="output-panel panel" id="outputPanel" style="display: none;">
+        <div class="panel-header">
+            <h2><i class="fas fa-check-circle"></i> DIGIPIN Result</h2>
+            <button class="close-btn" id="closeOutput">
+                <i class="fas fa-times"></i>
+            </button>
+        </div>
+        
+        <div class="result-display">
+            <div class="digipin-code-wrapper">
+                <label>Generated DIGIPIN:</label>
+                <div id="digipinResult" class="digipin-code"></div>
+                <button id="copyDigipin" class="copy-btn">
+                    <i class="fas fa-copy"></i> Copy Code
+                </button>
+            </div>
+            
+            <div class="coordinates-display" id="coordinatesDisplay">
+                <h3><i class="fas fa-map-pin"></i> Location Details</h3>
+                <div class="coord-item">
+                    <span class="coord-label">Latitude:</span>
+                    <span id="resultLat" class="coord-value"></span>
+                </div>
+                <div class="coord-item">
+                    <span class="coord-label">Longitude:</span>
+                    <span id="resultLng" class="coord-value"></span>
+                </div>
+            </div>
+            
+            <div class="explanation-section">
+                <h3><i class="fas fa-info-circle"></i> How DIGIPIN Works</h3>
+                <div class="explanation-content">
+                    <p><strong>DIGIPIN</strong> is India Post's 10-character geo-coded addressing system that converts latitude/longitude coordinates into a human-readable format.</p>
+                    
+                    <div class="process-steps">
+                        <div class="step">
+                            <div class="step-number">1</div>
+                            <div class="step-content">
+                                <strong>Grid Division:</strong> India is divided into a 4×4 grid using characters: F, C, 9, 8, J, 3, 2, 7, K, 4, 5, 6, L, M, P, T
+                            </div>
+                        </div>
+                        <div class="step">
+                            <div class="step-number">2</div>
+                            <div class="step-content">
+                                <strong>Hierarchical Encoding:</strong> Each location is encoded with 10 levels of precision, subdividing the area into smaller grids
+                            </div>
+                        </div>
+                        <div class="step">
+                            <div class="step-number">3</div>
+                            <div class="step-content">
+                                <strong>Format:</strong> XXX-XXX-XXXX where dashes separate levels for better readability
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="bounds-info">
+                        <h4><i class="fas fa-globe-asia"></i> Coverage Area</h4>
+                        <p>Covers India's geographic bounds: 2.5°-38.5°N, 63.5°-99.5°E</p>
+                    </div>
+                </div>
+            </div>
         </div>
     </div>
     
