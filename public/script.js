@@ -1,7 +1,11 @@
 // Global variables
 let map;
 let currentMarker;
-const API_BASE = 'http://localhost:5000/api/digipin';
+
+// Dynamic API base URL - works for both local development and production
+const API_BASE = window.location.hostname === 'localhost' 
+    ? 'http://localhost:5000/api/digipin'
+    : `${window.location.origin}/api/digipin`;
 
 // Initialize the application
 document.addEventListener('DOMContentLoaded', function() {
